@@ -16,26 +16,26 @@ export default function NotFound() {
             </span>
           </Link>
           <Link
-            href="/conflict-check"
+            href="/contact/#enquiry"
             className="text-xs font-semibold uppercase tracking-wider text-[#c5a880] hover:underline"
           >
-            Conflict Screening Portal
+            Request a Consultation
           </Link>
         </div>
       </header>
 
-      <main className="flex-1 flex items-center justify-center px-4 py-16">
+      <main id="main-content" className="flex-1 flex items-center justify-center px-4 py-16">
         <div className="max-w-lg text-center space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm border border-[#c5a880]/30 bg-[#12141a] text-[#c5a880] text-xs font-mono uppercase tracking-widest">
-            Error 404 · Record Not Found
+            Error 404 · Page Not Found
           </div>
 
           <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white">
-            Brief Or Docket Unavailable
+            This Page Could Not Be Found
           </h1>
 
           <p className="text-sm text-zinc-400 leading-relaxed font-light">
-            The legal brief, document, or chambers page requested could not be located in our active Lagos or Federal indices. You may return to the principal homepage or navigate to a specialized practice group.
+            The page you requested does not exist or has moved. Return to the homepage or browse our practice areas.
           </p>
 
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">

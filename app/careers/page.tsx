@@ -1,24 +1,22 @@
-'use client';
-
-import React, { useState } from 'react';
+import type { Metadata } from 'next';
+import React from 'react';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import ContactForm from '../../components/ContactForm';
 import { GraduationCap, Briefcase, Award, CheckCircle2, Send, FileText } from 'lucide-react';
 
+export const metadata: Metadata = {
+  title: 'Careers',
+  description: 'Pupillage, associate and clerkship opportunities. Apply online.',
+  alternates: { canonical: '/careers/' },
+};
+
 export default function CareersPage() {
-  const [submitted, setSubmitted] = useState(false);
-  const [role, setRole] = useState('pupillage');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
-
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <Navbar />
 
-      <main className="py-16 md:py-24">
+      <main id="main-content" className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           
           {/* Header */}
@@ -124,52 +122,7 @@ export default function CareersPage() {
               Our Recruitment Committee reviews applications on a rolling quarterly cycle. Candidates must possess a minimum of Second Class (Upper Division) at LL.B and Nigerian Law School B.L.
             </p>
 
-            {submitted ? (
-              <div className="p-6 rounded bg-emerald-950/20 border border-emerald-900/40 text-xs text-zinc-300 space-y-2">
-                <div className="font-bold text-emerald-400 text-sm">Application Dossier Received</div>
-                <p>Thank you for your submission to Knox &amp; Associates. Our recruitment clerk will review your credentials and contact shortlisted applicants for chambers assessment interviews.</p>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block uppercase font-semibold text-[var(--text-secondary)] mb-1">Full Legal Name *</label>
-                    <input type="text" required placeholder="e.g. Favour Knox" className="w-full rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3.5 py-2 text-white focus:border-[var(--accent-gold)] focus:outline-none" />
-                  </div>
-                  <div>
-                    <label className="block uppercase font-semibold text-[var(--text-secondary)] mb-1">Email Address *</label>
-                    <input type="email" required placeholder="favour@alumni.edu" className="w-full rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3.5 py-2 text-white focus:border-[var(--accent-gold)] focus:outline-none" />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block uppercase font-semibold text-[var(--text-secondary)] mb-1">Program Applied For</label>
-                    <select value={role} onChange={(e) => setRole(e.target.value)} className="w-full rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3.5 py-2 text-white focus:border-[var(--accent-gold)] focus:outline-none">
-                      <option value="pupillage">Pupillage Program (NYSC / Newly Called BL)</option>
-                      <option value="associate">Lateral Associate (Commercial Litigation)</option>
-                      <option value="energy">Lateral Associate (Energy &amp; Petroleum)</option>
-                      <option value="internship">Undergraduate Vacation Clerkship</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block uppercase font-semibold text-[var(--text-secondary)] mb-1">University &amp; Degree Classification</label>
-                    <input type="text" placeholder="e.g. UNILAG (LL.B First Class), NLS (BL 2:1)" className="w-full rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3.5 py-2 text-white focus:border-[var(--accent-gold)] focus:outline-none" />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block uppercase font-semibold text-[var(--text-secondary)] mb-1">Cover Note / Professional Statement</label>
-                  <textarea rows={3} placeholder="Summarize your academic distinction, law review experience, or commercial practice interests." className="w-full rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-3.5 py-2 text-white focus:border-[var(--accent-gold)] focus:outline-none" />
-                </div>
-
-                <div className="pt-2">
-                  <button type="submit" className="rounded-sm bg-[var(--accent-gold)] px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-[#0b0c10] hover:bg-[var(--accent-gold-light)] transition-colors cursor-pointer">
-                    Submit Recruitment Profile
-                  </button>
-                </div>
-              </form>
-            )}
+            <ContactForm kind="careers" />
           </div>
 
         </div>

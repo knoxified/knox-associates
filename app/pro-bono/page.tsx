@@ -14,7 +14,7 @@ export default function ProBonoPage() {
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <Navbar />
 
-      <main className="py-16 md:py-24">
+      <main id="main-content" className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           
           <div className="max-w-3xl space-y-4">

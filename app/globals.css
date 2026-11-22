@@ -15,33 +15,7 @@
     --text-muted: #6e7280;
   }
 
-  [data-theme="navy-brass"] {
-    --bg-primary: #0a1120;
-    --bg-secondary: #0f192d;
-    --bg-tertiary: #15223c;
-    --border-subtle: rgba(212, 175, 55, 0.2);
-    --border-prominent: rgba(212, 175, 55, 0.45);
-    --accent-gold: #d4af37;
-    --accent-gold-light: #fae084;
-    --accent-gold-dark: #997b1a;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-  }
 
-  [data-theme="monochrome"] {
-    --bg-primary: #0a0a0c;
-    --bg-secondary: #121216;
-    --bg-tertiary: #1b1b22;
-    --border-subtle: rgba(255, 255, 255, 0.15);
-    --border-prominent: rgba(255, 255, 255, 0.35);
-    --accent-gold: #e2e8f0;
-    --accent-gold-light: #ffffff;
-    --accent-gold-dark: #94a3b8;
-    --text-primary: #ffffff;
-    --text-secondary: #a1a1aa;
-    --text-muted: #71717a;
-  }
 }
 
 .font-cinzel {
@@ -78,4 +52,18 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #363b4b;
+}
+
+/* Anchored sections sit below the sticky header */
+[id] { scroll-margin-top: 7.5rem; }
+
+:focus-visible {
+  outline: 2px solid var(--accent-gold);
+  outline-offset: 2px;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

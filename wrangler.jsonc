@@ -1,10 +1,29 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "knox-associates",
+  "main": "worker/index.js",
   "compatibility_date": "2026-10-19",
+
+  // Static site built by `next build` into ./out. The Worker only runs for /api/*; everything else is served straight from assets.
   "assets": {
     "directory": "./out",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
   },
+
+  // Non-secret settings. CLIENT: set these to the firm's real mailboxes. MAIL_FROM must be on a domain verified in Resend.
+  "vars": {
+    "MAIL_FROM": "Knox & Associates Website <website@knox.associates>",
+    "CONTACT_TO": "info@knox.associates",
+    "CAREERS_TO": "info@knox.associates"
+  },
+
+  // Secrets (never commit these). Set with:
+  //   npx wrangler secret put RESEND_API_KEY
+  //   npx wrangler secret put TURNSTILE_SECRET_KEY   (optional but recommended)
+  // Build-time variables (set in the Cloudflare build settings, not here):
+  //   NEXT_PUBLIC_SITE_URL, NEXT_PUBLIC_TURNSTILE_SITE_KEY
+
   "observability": { "enabled": true }
 }

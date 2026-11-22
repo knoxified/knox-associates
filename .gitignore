@@ -1,9 +1,11 @@
 node_modules/
 .next/
+out/
 coverage/
 .DS_Store
 *.log
 .env*
 !.env.example
-out/
-.aistudio/
+.dev.vars
+.wrangler/
+next-env.d.ts

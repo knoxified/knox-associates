@@ -13,7 +13,7 @@ export default function TermsPage() {
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <Navbar />
 
-      <main className="py-16 md:py-24">
+      <main id="main-content" className="py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 font-sans-legal text-zinc-300">
           
           <div className="space-y-4 pb-8 border-b border-[var(--border-subtle)]">
@@ -37,7 +37,7 @@ export default function TermsPage() {
                 1. Absence of Barrister-Client or Solicitor-Client Relationship
               </h2>
               <p>
-                The materials, statutory briefs, retainer calculators, and case commentary provided on this website are for general informational purposes only. Accessing, browsing, or interacting with this platform does not create a Barrister-Client or Solicitor-Client relationship between you and Knox &amp; Associates.
+                The materials, articles and commentary provided on this website are for general informational purposes only. Accessing, browsing, or interacting with this platform does not create a Barrister-Client or Solicitor-Client relationship between you and Knox &amp; Associates.
               </p>
               <p>
                 A formal professional relationship is established exclusively upon:
@@ -91,7 +91,7 @@ export default function TermsPage() {
                 5. Intellectual Property in Chambers Briefs &amp; Treatises
               </h2>
               <p>
-                All legal briefs, statutory analyses, commentary on CAMA 2020 and PIA 2021, visual insignias, and software logic embedded on <strong className="text-white">knox.associates</strong> are the intellectual property of Knox &amp; Associates, protected under the Nigerian Copyright Act 2022 and international treaties. Reproduction without prior written authorization is prohibited.
+                All legal briefs, statutory analyses, commentary on CAMA 2020 and PIA 2021 and other content on <strong className="text-white">knox.associates</strong> are the intellectual property of Knox &amp; Associates, protected under the Nigerian Copyright Act 2022 and international treaties. Reproduction without prior written authorization is prohibited.
               </p>
             </section>
 

@@ -1,51 +1,39 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import AttorneysRoster from '../../components/AttorneysRoster';
-import { Users, Award, ShieldCheck, ArrowRight } from 'lucide-react';
-import Link from 'next/link';
+import PageHeader from '../../components/PageHeader';
+import EnquiryCta from '../../components/EnquiryCta';
+import { ATTORNEYS } from '../../lib/data/attorneys';
 
 export const metadata: Metadata = {
-  title: 'Partners & Senior Advocates of Nigeria (SAN) | Knox & Associates',
-  description: 'Meet the advocates leading Knox & Associates: Senior Advocates of Nigeria (SAN), Cambridge and Oxford alumni, and Fellows of the Chartered Institute of Arbitrators.',
+  title: 'Our Team',
+  description: 'Meet the partners and lawyers of the firm: their experience, qualifications and areas of focus.',
+  alternates: { canonical: '/attorneys/' },
 };
+
+const initials = (n: string) => n.split(' ').map((w) => w[0]).slice(0, 2).join('');
 
 export default function AttorneysPage() {
   return (
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <Navbar />
-
-      <main className="py-8">
-        <AttorneysRoster />
-
-        {/* Chambers Leadership Notice */}
-        <section className="py-16 bg-[var(--bg-secondary)] border-b border-[var(--border-subtle)]">
-          <div className="mx-auto max-w-4xl px-4 text-center space-y-6">
-            <h2 className="font-cinzel text-2xl sm:text-3xl font-bold text-white">
-              Direct Partner Accountability
-            </h2>
-            <p className="font-sans-legal text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed max-w-xl mx-auto">
-              In fidelity to Rule 14 of the Rules of Professional Conduct (RPC 2023), our partners personally steer every docket. We reject the model where client matters are delegated to unvetted junior associates.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-              <Link
-                href="/contact"
-                className="flex items-center gap-2 rounded-sm border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#0b0c10] hover:bg-[var(--accent-gold-light)] transition-colors"
-              >
-                <span>Instruct Chambers Partners</span>
-                <ArrowRight className="h-3.5 w-3.5" />
+      <main id="main-content">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
+          <PageHeader eyebrow="Our Team" title="Partners & Lawyers" intro="Experienced counsel across our practice areas." />
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {ATTORNEYS.map((a) => (
+              <Link key={a.id} href={`/attorneys/${a.id}/`} className="group space-y-3 rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/80 p-6 transition-colors hover:border-[var(--accent-gold)]">
+                <div aria-hidden="true" className="flex h-16 w-16 items-center justify-center rounded-sm border border-[var(--border-prominent)] bg-[var(--bg-primary)] font-cinzel text-xl font-bold text-[var(--accent-gold)]">{initials(a.name)}</div>
+                <h2 className="font-cinzel text-lg font-bold text-white group-hover:text-[var(--accent-gold)]">{a.name}{a.honorific && <span className="text-[var(--accent-gold)]">, {a.honorific}</span>}</h2>
+                <div className="font-sans-legal text-xs text-[var(--accent-gold)]">{a.title}</div>
+                <p className="font-sans-legal text-xs leading-relaxed text-[var(--text-secondary)]">{a.focus}</p>
               </Link>
-              <Link
-                href="/about"
-                className="flex items-center gap-2 rounded-sm border border-[var(--border-subtle)] bg-[var(--bg-primary)] px-6 py-3 text-xs font-semibold text-[var(--text-primary)] hover:border-[var(--accent-gold)] hover:text-[var(--accent-gold)] transition-colors"
-              >
-                <span>Read Chambers Heritage</span>
-              </Link>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
+        <EnquiryCta />
       </main>
-
       <Footer />
     </div>
   );

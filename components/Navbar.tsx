@@ -2,187 +2,111 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Shield, Menu, X, Scale, MapPin, Phone, Mail } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { Scale, Menu, X, Phone, Mail, MapPin, ArrowRight } from 'lucide-react';
+import { SITE, NAV, ENQUIRY_HREF } from '../lib/site';
 
-interface NavbarProps {
-  onOpenIntake?: () => void;
-}
+export default function Navbar() {
+  const pathname = usePathname() || '/';
+  // Menu is open only for the route it was opened on, so navigating closes it without an effect.
+  const [openPath, setOpenPath] = useState<string | null>(null);
+  const open = openPath === pathname;
+  const hq = SITE.offices[0];
 
-export default function Navbar({ onOpenIntake }: NavbarProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/');
+  const linkCls = (href: string) =>
+    `transition-colors hover:text-[var(--text-primary)] ${isActive(href) ? 'text-[var(--accent-gold)]' : ''}`;
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-[var(--border-subtle)] bg-[var(--bg-primary)]/95 backdrop-blur-md transition-colors duration-300">
-      {/* Top Advisory Banner - Stately Nigerian Chambers Presence */}
+    <header className="sticky top-0 z-40 w-full border-b border-[var(--border-subtle)] bg-[var(--bg-primary)]/95 backdrop-blur-md">
       <div className="border-b border-[var(--border-subtle)]/50 bg-[var(--bg-secondary)]/90 px-4 py-2 text-xs text-[var(--text-muted)]">
         <div className="mx-auto flex max-w-7xl items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#c5a880]"></span>
-            <span className="font-sans-legal tracking-wide flex items-center gap-1.5">
-              <MapPin className="h-3 w-3 text-[var(--accent-gold)]" />
-              <span>Headquarters: <strong className="text-[var(--text-primary)] font-medium">Kingsway Tower, Ikoyi, Lagos</strong></span>
-            </span>
-            <span className="hidden md:inline text-zinc-600" aria-hidden="true">·</span>
-            <span className="hidden md:inline">Abuja (FCT) · Port Harcourt · London Desk</span>
-          </div>
-
+          <span className="flex items-center gap-1.5 font-sans-legal tracking-wide">
+            <MapPin className="h-3 w-3 text-[var(--accent-gold)]" aria-hidden="true" />
+            <span className="truncate">{hq.address.split(',').slice(-2).join(',').trim()}</span>
+            {SITE.offices.length > 1 && (
+              <span className="hidden md:inline">
+                {' · '}
+                {SITE.offices.slice(1).map((o) => o.city).join(' · ')}
+              </span>
+            )}
+          </span>
           <div className="flex items-center gap-4 text-[11px] font-sans-legal">
-            <a
-              href="tel:+23412950199"
-              className="flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent-gold)] transition-colors"
-            >
-              <Phone className="h-3 w-3 text-[var(--accent-gold)]" />
-              <span className="hidden sm:inline">+234 (1) 295-0199</span>
+            <a href={`tel:${SITE.phone.tel}`} className="flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent-gold)]">
+              <Phone className="h-3 w-3 text-[var(--accent-gold)]" aria-hidden="true" />
+              <span className="hidden sm:inline">{SITE.phone.display}</span>
+              <span className="sm:hidden sr-only">Call us</span>
             </a>
-            <span aria-hidden="true" className="text-zinc-700 hidden sm:inline">|</span>
-            <a
-              href="mailto:info@knox.associates"
-              className="flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent-gold)] transition-colors"
-            >
-              <Mail className="h-3 w-3 text-[var(--accent-gold)]" />
-              <span className="hidden sm:inline">info@knox.associates</span>
+            <a href={`mailto:${SITE.email}`} className="flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent-gold)]">
+              <Mail className="h-3 w-3 text-[var(--accent-gold)]" aria-hidden="true" />
+              <span className="hidden sm:inline">{SITE.email}</span>
+              <span className="sm:hidden sr-only">Email us</span>
             </a>
           </div>
         </div>
       </div>
 
-      {/* Main Navbar */}
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
-        {/* Brand identity */}
-        <Link href="/" className="flex items-center gap-3 group focus:outline-none focus:ring-1 focus:ring-[var(--accent-gold)] rounded-sm p-1">
-          <div className="flex h-10 w-10 items-center justify-center rounded-sm border border-[var(--border-prominent)] bg-[var(--bg-secondary)] text-[var(--accent-gold)] group-hover:border-[var(--accent-gold)] transition-colors shadow-sm">
-            <Scale className="h-5 w-5" />
+      <nav aria-label="Main" className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        <Link href="/" className="group flex items-center gap-3 rounded-sm p-1 focus-visible:outline focus-visible:outline-1 focus-visible:outline-[var(--accent-gold)]">
+          <div className="flex h-10 w-10 items-center justify-center rounded-sm border border-[var(--border-prominent)] bg-[var(--bg-secondary)] text-[var(--accent-gold)] transition-colors group-hover:border-[var(--accent-gold)]">
+            <Scale className="h-5 w-5" aria-hidden="true" />
           </div>
           <div>
-            <span className="block font-cinzel text-lg sm:text-xl font-bold tracking-wider text-[var(--text-primary)] group-hover:text-[var(--accent-gold)] transition-colors">
-              KNOX &amp; ASSOCIATES
+            <span className="block font-cinzel text-lg font-bold tracking-wider text-[var(--text-primary)] transition-colors group-hover:text-[var(--accent-gold)] sm:text-xl">
+              {SITE.nameCaps}
             </span>
-            <span className="block font-sans-legal text-[10px] tracking-widest uppercase text-[var(--text-muted)]">
-              Barristers, Solicitors &amp; Arbitrators · Lagos, Nigeria
+            <span className="hidden sm:block font-sans-legal text-[10px] uppercase tracking-widest text-[var(--text-muted)]">
+              {SITE.tagline}
             </span>
           </div>
         </Link>
 
-        {/* Desktop Nav Links */}
-        <div className="hidden lg:flex items-center gap-7 font-sans-legal text-sm text-[var(--text-secondary)]">
-          <Link href="/about" className="hover:text-[var(--text-primary)] transition-colors">
-            About Chambers
-          </Link>
-          <Link href="/practice-areas" className="hover:text-[var(--text-primary)] transition-colors">
-            Practice Disciplines
-          </Link>
-          <Link href="/attorneys" className="hover:text-[var(--text-primary)] transition-colors">
-            Partners &amp; SANs
-          </Link>
-          <Link href="/conflict-check" className="hover:text-[var(--text-primary)] transition-colors">
-            Conflict Screening
-          </Link>
-          <Link href="/fees" className="hover:text-[var(--text-primary)] transition-colors">
-            Scale of Fees
-          </Link>
-          <Link href="/briefs" className="hover:text-[var(--text-primary)] transition-colors">
-            Legal Briefs
-          </Link>
-          <Link href="/contact" className="hover:text-[var(--text-primary)] transition-colors">
-            Offices &amp; Contact
-          </Link>
-        </div>
-
-        {/* Action Controls */}
-        <div className="hidden sm:flex items-center gap-3">
+        <div className="hidden items-center gap-7 font-sans-legal text-xs font-medium uppercase tracking-wider text-[var(--text-secondary)] lg:flex">
+          {NAV.map((n) => (
+            <Link key={n.href} href={n.href} className={linkCls(n.href)} aria-current={isActive(n.href) ? 'page' : undefined}>
+              {n.label}
+            </Link>
+          ))}
           <Link
-            href="/conflict-check"
-            className="flex items-center gap-2 rounded-sm border border-[var(--accent-gold)] bg-[var(--accent-gold)]/10 px-4 py-2 font-sans-legal text-xs sm:text-sm font-semibold tracking-wide text-[var(--accent-gold)] hover:bg-[var(--accent-gold)] hover:text-[#0b0c10] transition-all duration-200 cursor-pointer shadow-sm"
+            href={ENQUIRY_HREF}
+            className="flex items-center gap-2 rounded-sm border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-4 py-2.5 font-bold text-[#0b0c10] transition-colors hover:bg-[var(--accent-gold-light)]"
           >
-            <Shield className="h-4 w-4" />
-            <span>Confidential Intake</span>
+            Request Consultation <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
           </Link>
         </div>
 
-        {/* Mobile menu trigger */}
-        <div className="flex items-center gap-2 lg:hidden">
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle navigation menu"
-            className="rounded-sm border border-[var(--border-subtle)] p-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] focus:outline-none"
-          >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-        </div>
+        <button
+          type="button"
+          className="rounded-sm border border-[var(--border-subtle)] p-2 text-[var(--text-primary)] lg:hidden"
+          aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          onClick={() => setOpenPath(open ? null : pathname)}
+        >
+          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </nav>
 
-      {/* Mobile Menu Dropdown */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)] px-4 py-6 font-sans-legal text-sm">
-          <div className="flex flex-col gap-4">
-            <Link
-              href="/about"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-            >
-              About Chambers
-            </Link>
-            <Link
-              href="/practice-areas"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-            >
-              Practice Disciplines (CAMA &amp; PIA)
-            </Link>
-            <Link
-              href="/attorneys"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-            >
-              Partners &amp; Senior Advocates of Nigeria (SAN)
-            </Link>
-            <Link
-              href="/conflict-check"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-            >
-              Conflict Clearance Portal (RPC 2023)
-            </Link>
-            <Link
-              href="/fees"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-            >
-              Scale of Fees &amp; Retainer Calculator
-            </Link>
-            <Link
-              href="/briefs"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-            >
-              Nigerian Law Briefs &amp; Statutory Commentary
-            </Link>
-            <Link
-              href="/careers"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-            >
-              Pupillage &amp; Careers
-            </Link>
-            <Link
-              href="/contact"
-              onClick={() => setMobileMenuOpen(false)}
-              className="py-1 text-[var(--text-secondary)] hover:text-[var(--accent-gold)]"
-            >
-              Offices &amp; Contact
-            </Link>
-
-            <div className="pt-4 border-t border-[var(--border-subtle)] flex flex-col gap-2">
-              <Link
-                href="/conflict-check"
-                onClick={() => setMobileMenuOpen(false)}
-                className="w-full flex items-center justify-center gap-2 rounded-sm border border-[var(--accent-gold)] bg-[var(--accent-gold)] px-4 py-2.5 font-sans-legal text-xs font-semibold text-[#0b0c10]"
-              >
-                <Shield className="h-4 w-4" />
-                <span>Begin Confidential Lagos Intake</span>
-              </Link>
-            </div>
-          </div>
+      {open && (
+        <div id="mobile-menu" className="border-t border-[var(--border-subtle)] bg-[var(--bg-primary)] px-4 pb-6 pt-2 lg:hidden">
+          <ul className="flex flex-col font-sans-legal text-sm">
+            {NAV.map((n) => (
+              <li key={n.href}>
+                <Link
+                  href={n.href}
+                  className={`block border-b border-[var(--border-subtle)] py-3.5 ${isActive(n.href) ? 'text-[var(--accent-gold)]' : 'text-[var(--text-primary)]'}`}
+                >
+                  {n.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link
+            href={ENQUIRY_HREF}
+            className="mt-5 flex items-center justify-center gap-2 rounded-sm bg-[var(--accent-gold)] px-4 py-3.5 font-sans-legal text-xs font-bold uppercase tracking-wider text-[#0b0c10]"
+          >
+            Request Consultation <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
         </div>
       )}
     </header>

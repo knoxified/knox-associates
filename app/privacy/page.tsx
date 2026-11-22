@@ -13,7 +13,7 @@ export default function PrivacyPage() {
     <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)]">
       <Navbar />
 
-      <main className="py-16 md:py-24">
+      <main id="main-content" className="py-16 md:py-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 font-sans-legal text-zinc-300">
           
           <div className="space-y-4 pb-8 border-b border-[var(--border-subtle)]">
@@ -37,10 +37,13 @@ export default function PrivacyPage() {
                 1. Data Controller &amp; Statutory Framework
               </h2>
               <p>
-                This Privacy Notice is issued by <strong className="text-white">Knox &amp; Associates</strong> (referred to herein as "the Firm", "we", "us", or "our"), having its principal chambers at Kingsway Tower, 11th Floor, Alfred Rewane Road, Ikoyi, Lagos, Nigeria. 
+                This Privacy Notice is issued by <strong className="text-white">Knox &amp; Associates</strong> (referred to herein as &ldquo;the Firm&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;, or &ldquo;our&rdquo;), having its principal chambers at Kingsway Tower, 11th Floor, Alfred Rewane Road, Ikoyi, Lagos, Nigeria. 
               </p>
               <p>
                 We process personal data in strict compliance with the <strong className="text-white">Nigeria Data Protection Act (NDPA 2023)</strong>, the General Application and Implementation Directive (GAID), the Nigeria Data Protection Commission (NDPC) guidelines, and applicable international data protection frameworks including the UK GDPR for cross-border instructions.
+              </p>
+              <p>
+                <strong className="text-white">Website enquiries.</strong> When you submit our enquiry or careers form, the details you provide are sent to our mailbox through a transactional email service and are protected by Cloudflare Turnstile and hosting on Cloudflare. We use them only to respond to you. This website does not use advertising or analytics cookies.
               </p>
             </section>
 
@@ -95,7 +98,7 @@ export default function PrivacyPage() {
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-[var(--accent-gold)] shrink-0 mt-0.5" />
-                  <span><strong>Right to Erasure ("Right to be Forgotten"):</strong> Request deletion of data where retention is no longer warranted under Nigerian statutory limitation laws.</span>
+                  <span><strong>Right to Erasure (&ldquo;Right to be Forgotten&rdquo;):</strong> Request deletion of data where retention is no longer warranted under Nigerian statutory limitation laws.</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-[var(--accent-gold)] shrink-0 mt-0.5" />

@@ -34,7 +34,17 @@ jobs:
           NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ vars.NEXT_PUBLIC_TURNSTILE_SITE_KEY }}
 
       - name: Deploy to Cloudflare
-        run: npx wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          [ -n "$CLOUDFLARE_API_TOKEN" ] || echo "::error::CLOUDFLARE_API_TOKEN secret is missing or empty"
+          [ -n "$CLOUDFLARE_ACCOUNT_ID" ] || echo "::error::CLOUDFLARE_ACCOUNT_ID secret is missing or empty"
+          set +e
+          npx wrangler deploy 2>&1 | tee deploy.log
+          code=${PIPESTATUS[0]}
+          if [ "$code" -ne 0 ]; then
+            msg=$(sed 's/\x1b\[[0-9;]*m//g' deploy.log | tail -n 20 | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')
+            echo "::error title=wrangler deploy failed::$msg"
+          fi
+          exit $code
